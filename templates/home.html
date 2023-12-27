@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<section class="container d-flex align-items-center my-5">
+    <div class="col-6">
+        <h1>Favorite Car Shop.</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti, quos!</p>
+    </div>
+    <div class="col-6">
+        <img src="{% static 'all-car.png' %}" alt="">
+    </div>
+</section>
+<section class="container mx-auto row-cols-1 row-cols-md-3 g-4">
+    <div class='d-flex '>
+        {% for brand in brands %}
+        <div class="col">
+            <h3><a href="{% url 'brand_slug' brand.slug %}" class='mx-1 btn btn-primary'>{{brand.name}}</a></h3>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+<section class='container my-3'>
+    <h4>{{data | length}} results found</h4>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for info in data %}
+        <div class="col">
+            <div class="card h-100">
+                <img src="{{ info.car_img.url }}" class="card-img-top" alt="">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="{% url 'details' info.id %}"
+                            class='text-decoration-none text-black'>{{info.name}}</a></h5>
+                    <p class="card-text">{{info.description | truncatewords:10}}</p>
+                    <p class="card-text">Price: {{info.price}}</p>
+                    <p class="card-text">Quantity: {{info.quantity}}</p>
+                    <p class="card-text">Brand Name: {{info.brand_name}}</p>
+                    <!-- {% if user.is_authenticated %}
+                    <a href='{% url "purchase_car" info.id %}' class='btn btn-primary' type='submit'>Buy Now</a>
+                    {%endif%} -->
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</section>
+{% endblock content %}
